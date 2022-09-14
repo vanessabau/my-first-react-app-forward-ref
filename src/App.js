@@ -1,22 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef, useEffect } from "react";
+import "./App.scss";
+import Input from "./components/input";
+
+const inputStyle = {
+  width: "400px",
+  height: "40px",
+  fontSize: "30px",
+  marginBottom: "10px"
+};
 
 function App() {
+  const firstNameRef = useRef(null);
+  const lastNameRef = useRef(null);
+
+  useEffect(() => {
+    firstNameRef.current.focus();
+  }, []);
+
+  function firstNameKeyDown(e) {
+    if (e.key === "Enter") {
+      lastNameRef.current.focus();
+    }
+  }
+
+  function lastNameKeyDown() {}
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Input
+          onKeyDown={firstNameKeyDown}
+          ref={firstNameRef}
+          placeholder="type first name here "
+          style={inputStyle}
+        />
+        <Input
+          onKeyDown={lastNameKeyDown}
+          ref={lastNameRef}
+          placeholder="type last name here "
+          style={inputStyle}
+        />
       </header>
     </div>
   );
